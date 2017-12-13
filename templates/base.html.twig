@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>{% block title %}StarLinker{% endblock %}</title>
+
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
+
+    <link rel="stylesheet" type="text/css" media="screen" href="{{ asset('build/css/app.css') }}"/>
+
+    {% block stylesheets %}{% endblock %}
+
+</head>
+<body id="app-layout">
+
+{% include('_menu.html.twig') %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            {% include ('_flash-messages.html.twig') %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            {% block body %}{% endblock %}
+        </div>
+    </div>
+</div>
+
+{% include ('_footer.html.twig') %}
+
+{% block javascripts %}
+    <script type="text/javascript" src="{{ asset('build/manifest.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('build/js/common.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('build/js/app.js') }}"></script>
+{% endblock %}
+
+</body>
+</html>

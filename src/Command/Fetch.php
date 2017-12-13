@@ -51,11 +51,11 @@ class Fetch extends ContainerAwareCommand
 			$topten[$d[1]] = $d[3];
 		}
 
-		$response          = new \stdClass();
-		$response->time    = (new \DateTime())->format('H:i');
-		$response->topten   = $topten;
+		$response         = new \stdClass();
+		$response->time   = (new \DateTime())->format('H:i');
+		$response->topten = $topten;
 
-		$outputFile = $root.'/data/'.(new \DateTime())->format('Y-m-d').'-starlink-data.txt';
+		$outputFile = $root . '/data/' . (new \DateTime())->format('Y-m-d') . '-starlink-data.txt';
 
 		$io->text('write to ' . $outputFile);
 		$fs = new Filesystem();

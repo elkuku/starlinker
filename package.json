@@ -1,0 +1,13 @@
+{
+  "name": "starlinker",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/elkuku/starlinker.git",
+  "author": "Nikolai Plath <der.el.kuku@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "chart.js": "^2.7.1",
+    "jquery": "^3.2.1"
+  }
+}

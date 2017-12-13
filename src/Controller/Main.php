@@ -8,17 +8,25 @@
 
 namespace App\Controller;
 
+use App\Service\StarLinker;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class Main
+class Main extends Controller
 {
 	/**
-	 * @Route("/")
+	 * @Route("/", name="welcome")
 	 */
-	public function main()
+	public function main(StarLinker $starLinker)
 	{
-		return new Response('hello');
-	}
+		$topTen = $starLinker->getTopTen();
 
+		return $this->render(
+			'default/index.html.twig',
+			[
+				'topten' => $topTen
+			]
+		);
+	}
 }
