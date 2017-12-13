@@ -42,6 +42,7 @@ class StarLinker
 
 		$contents = trim(file_get_contents($path));
 
+		return explode("\n", $contents);
 	}
 
 	public function getTopTen()
@@ -92,4 +93,56 @@ class StarLinker
 		return $array;
 	}
 
+	public function getFormatForJsChart(\DateTime $dateTime)
+	{
+		$lines = $this->getStatsByDate($dateTime);
+
+		$format = new \stdClass();
+
+		$dateString = $dateTime->format('Y-m-d');
+
+		$topTens = [];
+		$headers = [];
+
+		foreach ($lines as $line)
+		{
+			$data = json_decode($line);
+
+			$headers[] = $dateString . ' ' . $data->time;
+
+			foreach ($data->topten as $name => $score)
+			{
+				if ($name)
+				{
+					$topTens[$name][] = $score;
+				}
+				else
+				{
+					foreach ($topTens as $ix => $vals)
+					{
+						$topTens[$ix][] = 0;
+					}
+				}
+			}
+		}
+
+		array_pop($topTens);
+		array_pop($topTens);
+		array_pop($topTens);
+
+		//$format->headers = $headers;
+		//$format->topTens = $topTens;
+		$format->headerString = '\'' . implode('\',\'', $headers) . '\'';
+
+		$topTensLines = [];
+
+		foreach ($topTens as $name => $scores)
+		{
+			$topTensLines[] = 'label: \'' . $name . '\', data: [' . implode(',', $scores).']';
+		}
+
+		$format->topTenLines = '{'.implode('},{', $topTensLines) . '}';
+
+		return $format;
+	}
 }

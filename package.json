@@ -6,8 +6,20 @@
   "author": "Nikolai Plath <der.el.kuku@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "bootstrap": "^3.3.7",
+    "bootstrap-datepicker": "^1.7.1",
+    "bootstrap-sass": "^3.3.7",
     "chart.js": "^2.7.1",
     "jquery": "^3.2.1"
+  },
+  "devDependencies": {
+    "@symfony/webpack-encore": "^0.17.0",
+    "node-sass": "^4.7.2",
+    "sass-loader": "^6.0.6"
+  },
+  "scripts": {
+    "dev-server": "./node_modules/.bin/encore dev-server",
+    "dev": "./node_modules/.bin/encore dev",
+    "watch": "./node_modules/.bin/encore dev --watch",
+    "build": "./node_modules/.bin/encore production"
   }
 }

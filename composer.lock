@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "423b3298313a27319bc65e132aaaf9e7",
+    "content-hash": "522523c2e2f571b60e1d09554f7fc521",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1899,6 +1899,28 @@
             "description": "Symfony TwigBundle",
             "homepage": "https://symfony.com",
             "time": "2017-12-04T12:31:58+00:00"
+        },
+        {
+            "name": "symfony/webpack-encore-pack",
+            "version": "v1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/webpack-encore-pack.git",
+                "reference": "9062e3c18ac428e5e122ec06a95f14051a65225c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/webpack-encore-pack/zipball/9062e3c18ac428e5e122ec06a95f14051a65225c",
+                "reference": "9062e3c18ac428e5e122ec06a95f14051a65225c",
+                "shasum": ""
+            },
+            "type": "symfony-pack",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "A pack for Symfony Encore",
+            "time": "2017-12-12T01:49:18+00:00"
         },
         {
             "name": "symfony/yaml",

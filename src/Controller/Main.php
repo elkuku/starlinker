@@ -17,15 +17,20 @@ class Main extends Controller
 {
 	/**
 	 * @Route("/", name="welcome")
+	 * @param StarLinker $starLinker
+	 *
+	 * @return Response
 	 */
 	public function main(StarLinker $starLinker)
 	{
 		$topTen = $starLinker->getTopTen();
+		$stats = $starLinker->getFormatForJsChart(new \DateTime());
 
 		return $this->render(
 			'default/index.html.twig',
 			[
-				'topten' => $topTen
+				'topten' => $topTen,
+				'stats' => $stats
 			]
 		);
 	}

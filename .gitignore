@@ -6,5 +6,9 @@
 /vendor/
 ###< symfony/framework-bundle ###
 
-/node_modules/
 yarn-error.log
+
+###> symfony/webpack-encore-pack ###
+/node_modules/
+/public/build/
+###< symfony/webpack-encore-pack ###
