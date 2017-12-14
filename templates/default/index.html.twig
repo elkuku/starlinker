@@ -27,6 +27,30 @@
             }
         });
 
+        new Chart(document.getElementById('kukuChart'), {
+            type: 'line',
+            data: {
+                labels: [
+                    {{ stats.kukuHeaderString|raw }}
+                ],
+                datasets: [
+                    {{ stats.kukuDataString|raw }}
+                ]
+            },
+            options: {
+                scales: {
+                    xAxes: [{
+                        type: 'time',
+                        time: {
+                            displayFormats: {
+                                minute: 'h:mm'
+                            }
+                        }
+                    }]
+                }
+            }
+        });
+
         setTimeout(function(){
             window.location.reload(1);
         }, 60000);
@@ -49,5 +73,6 @@
     </table>
 
     <canvas id="statsChart" width="400" height="200"></canvas>
+    <canvas id="kukuChart" width="400" height="200"></canvas>
 
 {% endblock %}

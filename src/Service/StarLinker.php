@@ -104,6 +104,9 @@ class StarLinker
 		$topTens = [];
 		$headers = [];
 
+		$kukuHeaders = [];
+		$kukuData = [];
+
 		foreach ($lines as $line)
 		{
 			$data = json_decode($line);
@@ -115,6 +118,12 @@ class StarLinker
 				if ($name)
 				{
 					$topTens[$name][] = $score;
+
+					if ('Kuku ' === $name)
+					{
+						$kukuHeaders[] = $dateString . ' ' . $data->time;
+						$kukuData[] = $score;
+					}
 				}
 				else
 				{
@@ -130,8 +139,6 @@ class StarLinker
 		array_pop($topTens);
 		array_pop($topTens);
 
-		//$format->headers = $headers;
-		//$format->topTens = $topTens;
 		$format->headerString = '\'' . implode('\',\'', $headers) . '\'';
 
 		$topTensLines = [];
@@ -142,6 +149,9 @@ class StarLinker
 		}
 
 		$format->topTenLines = '{'.implode('},{', $topTensLines) . '}';
+
+		$format->kukuHeaderString = '\'' . implode('\',\'', $kukuHeaders) . '\'';
+		$format->kukuDataString = '{label: \'KuKu\', data: [' . implode(',', $kukuData).']}';
 
 		return $format;
 	}
