@@ -135,10 +135,6 @@ class StarLinker
 			}
 		}
 
-		array_pop($topTens);
-		array_pop($topTens);
-		array_pop($topTens);
-
 		$format->headerString = '\'' . implode('\',\'', $headers) . '\'';
 
 		$topTensLines = [];
