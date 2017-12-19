@@ -69,8 +69,8 @@
             <tr>
                 <td>{{ rank }}</td>
                 <td>{{ name }}</td>
-                <td>{{ data.start }}</td>
-                <td>{{ data.end }}</td>
+                <td>{{ data.start|price }}</td>
+                <td>{{ data.end|price }}</td>
                 <td>{{ data.diff }}</td>
             </tr>
         {% else %}
