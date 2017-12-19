@@ -25,12 +25,13 @@ class Main extends Controller
 	{
 		$topTen = $starLinker->getTopTen();
 		$stats = $starLinker->getFormatForJsChart(new \DateTime());
+		$diff = $starLinker->getTopTenDiff(new \DateTime());
 
 		return $this->render(
 			'default/index.html.twig',
 			[
-				'topten' => $topTen,
-				'stats' => $stats
+				'stats' => $stats,
+                'toptenDiff' => $diff
 			]
 		);
 	}

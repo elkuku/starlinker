@@ -151,4 +151,35 @@ class StarLinker
 
 		return $format;
 	}
+
+    public function getTopTenDiff(\DateTime $dateTime)
+    {
+        $lines = $this->getStatsByDate($dateTime);
+
+        $diff = [];
+
+        $dateString = $dateTime->format('Y-m-d');
+
+        $data1 = json_decode($lines[0]);
+        $data2 = json_decode(end($lines));
+
+        $starts = [];
+
+        foreach ($data2->topten as $name => $score) {
+            $data = new \stdClass();
+            $data->end = $score;
+            $diff[$name] = $data;
+        }
+
+        foreach ($data1->topten as $name => $score) {
+            if (isset($diff[$name])) {
+                $diff[$name]->start = $score;
+                $diff[$name]->diff =  $diff[$name]->end - $score;
+            }
+        }
+        //$diff->starts = $starts;
+//        $diff->end = json_decode(end($lines));
+
+        return $diff;
+    }
 }

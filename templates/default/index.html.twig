@@ -59,11 +59,19 @@
 {% endblock %}
 
 {% block body %}
-    <table>
-        {% for name, score in topten %}
+    <table class="table table-condensed table-striped">
+        <tr>
+            <th colspan="2">Name</th><th>Start</th><th>End</th><th>Diff</th>
+        </tr>
+        {% set rank = 0 %}
+        {% for name, data in toptenDiff %}
+            {% set rank = rank + 1 %}
             <tr>
+                <td>{{ rank }}</td>
                 <td>{{ name }}</td>
-                <td>{{ score }}</td>
+                <td>{{ data.start }}</td>
+                <td>{{ data.end }}</td>
+                <td>{{ data.diff }}</td>
             </tr>
         {% else %}
             <tr>
