@@ -61,17 +61,21 @@
 {% block body %}
     <table class="table table-condensed table-striped">
         <tr>
-            <th colspan="2">Name</th><th>Start</th><th>End</th><th>Diff</th>
+            <th class="text-center">#</th>
+            <th>Name</th>
+            <th class="text-right">Start</th>
+            <th class="text-right">End</th>
+            <th class="text-right">Diff</th>
         </tr>
         {% set rank = 0 %}
         {% for name, data in toptenDiff %}
             {% set rank = rank + 1 %}
             <tr>
-                <td>{{ rank }}</td>
+                <td class="text-center">{{ rank }}</td>
                 <td>{{ name }}</td>
-                <td>{{ data.start|price }}</td>
-                <td>{{ data.end|price }}</td>
-                <td>{{ data.diff }}</td>
+                <td class="text-right">{{ data.start|price }}</td>
+                <td class="text-right">{{ data.end|price }}</td>
+                <td class="text-right">{{ data.diff|price }}</td>
             </tr>
         {% else %}
             <tr>
