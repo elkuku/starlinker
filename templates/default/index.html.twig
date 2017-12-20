@@ -41,11 +41,7 @@
                 scales: {
                     xAxes: [{
                         type: 'time',
-                        time: {
-                            displayFormats: {
-                                minute: 'h:mm'
-                            }
-                        }
+                        time: { displayFormats: { minute: 'h:mm' }}
                     }]
                 }
             }
@@ -54,11 +50,18 @@
         setTimeout(function(){
             window.location.reload(1);
         }, 60000);
+
+        //$('#datepicker').datepicker();
+
     </script>
 
 {% endblock %}
 
 {% block body %}
+    <form id="dateSelect">
+
+        <input name="showdate" class="js-datepicker" data-date-format="yyyy-mm-dd" onchange="$('#dateSelect').submit()">
+    </form>
     <table class="table table-condensed table-striped">
         <tr>
             <th class="text-center">#</th>
