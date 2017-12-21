@@ -7,6 +7,7 @@
  */
 
 namespace App\Service;
+
 use Symfony\Component\Filesystem\Filesystem;
 
 /**
@@ -16,6 +17,23 @@ class StarLinker
 {
     private $projectDir;
 
+    private $colors = [
+        //red:
+        'rgb(255, 99, 132)',
+        // orange:
+        'rgb(255, 159, 64)',
+        // yellow:
+        'rgb(255, 205, 86)',
+        // green:
+        'rgb(75, 192, 192)',
+        // blue:
+        'rgb(54, 162, 235)',
+        // purple:
+        'rgb(153, 102, 255)',
+        // grey:
+        'rgb(201, 203, 207)'
+    ];
+
     /**
      * ShaFinder constructor.
      *
@@ -23,134 +41,127 @@ class StarLinker
      */
     public function __construct(string $projectDir)
     {
-	    $this->projectDir = $projectDir;
+        $this->projectDir = $projectDir;
     }
 
-	public function getStatsByDate(\DateTime $dateTime)
-	{
-		$fs = new Filesystem();
+    public function getStatsByDate(\DateTime $dateTime)
+    {
+        $fs = new Filesystem();
 
-		$stats = [];
-		$fileName = $dateTime->format('Y-m-d') . '-starlink-data.txt';
+        $stats = [];
+        $fileName = $dateTime->format('Y-m-d') . '-starlink-data.txt';
 
-		$path = $this->projectDir . '/data/' . $fileName;
+        $path = $this->projectDir . '/data/' . $fileName;
 
-		if (false === $fs->exists($path))
-		{
-			return $stats;
-		}
+        if (false === $fs->exists($path)) {
+            return $stats;
+        }
 
-		$contents = trim(file_get_contents($path));
+        $contents = trim(file_get_contents($path));
 
-		return explode("\n", $contents);
-	}
-
-	public function getTopTen()
-	{
-		$fs = new Filesystem();
-
-		$topTen = [];
-		$fileName = date('Y-m-d--H') . '-starlink-data.txt';
-
-		$path = $this->projectDir . '/data/' . $fileName;
-
-		if (false === $fs->exists($path))
-		{
-			return $topTen;
-		}
-
-		$contents = trim(file_get_contents($path));
-
-		$data = StarLinker::sortByField(explode("\n", $contents), 3);
-
-		for ($i = 0; $i < 5; $i++)
-		{
-			$d = explode("\t", $data[$i]);
-
-			$topTen[$d[1]] = $d[3];
-		}
-
-		return $topTen;
+        return explode("\n", $contents);
     }
 
-	public static function sortByField(array $array, int $field)
-	{
-		usort($array, function ($a, $b) {
-			$as = explode("\t", $a);
-			$bs = explode("\t", $b);
+    public function getTopTen()
+    {
+        $fs = new Filesystem();
 
-			// @todo change..
-			$sField = 3;
+        $topTen = [];
+        $fileName = date('Y-m-d--H') . '-starlink-data.txt';
 
-			if ($as[$sField] === $bs[$sField])
-			{
-				return 0;
-			}
+        $path = $this->projectDir . '/data/' . $fileName;
 
-			return $as[$sField] > $bs[$sField] ? -1 : 1;
-		});
+        if (false === $fs->exists($path)) {
+            return $topTen;
+        }
 
-		return $array;
-	}
+        $contents = trim(file_get_contents($path));
 
-	public function getFormatForJsChart(\DateTime $dateTime)
-	{
-		$lines = $this->getStatsByDate($dateTime);
+        $data = StarLinker::sortByField(explode("\n", $contents), 3);
 
-		$format = new \stdClass();
+        for ($i = 0; $i < 5; $i++) {
+            $d = explode("\t", $data[$i]);
 
-		$dateString = $dateTime->format('Y-m-d');
+            $topTen[$d[1]] = $d[3];
+        }
 
-		$topTens = [];
-		$headers = [];
+        return $topTen;
+    }
 
-		$kukuHeaders = [];
-		$kukuData = [];
+    public static function sortByField(array $array, int $field)
+    {
+        usort($array, function ($a, $b) {
+            $as = explode("\t", $a);
+            $bs = explode("\t", $b);
 
-		foreach ($lines as $line)
-		{
-			$data = json_decode($line);
+            // @todo change..
+            $sField = 3;
 
-			$headers[] = $dateString . ' ' . $data->time;
+            if ($as[$sField] === $bs[$sField]) {
+                return 0;
+            }
 
-			foreach ($data->topten as $name => $score)
-			{
-				if ($name)
-				{
-					$topTens[$name][] = $score;
+            return $as[$sField] > $bs[$sField] ? -1 : 1;
+        });
 
-					if ('Kuku ' === $name)
-					{
-						$kukuHeaders[] = $dateString . ' ' . $data->time;
-						$kukuData[] = $score;
-					}
-				}
-				else
-				{
-					foreach ($topTens as $ix => $vals)
-					{
-						$topTens[$ix][] = 0;
-					}
-				}
-			}
-		}
+        return $array;
+    }
 
-		$format->headerString = '\'' . implode('\',\'', $headers) . '\'';
+    public function getFormatForJsChart(\DateTime $dateTime)
+    {
+        $lines = $this->getStatsByDate($dateTime);
 
-		$topTensLines = [];
+        $format = new \stdClass();
 
-		foreach ($topTens as $name => $scores)
-		{
-			$topTensLines[] = 'label: \'' . $name . '\', data: [' . implode(',', $scores).']';
-		}
+        $dateString = $dateTime->format('Y-m-d');
 
-		$format->topTenLines = '{'.implode('},{', $topTensLines) . '}';
+        $topTens = [];
+        $headers = [];
 
-		$format->kukuHeaderString = '\'' . implode('\',\'', $kukuHeaders) . '\'';
-		$format->kukuDataString = '{label: \'KuKu\', data: [' . implode(',', $kukuData).']}';
+        $kukuHeaders = [];
+        $kukuData = [];
 
-		return $format;
-	}
+        foreach ($lines as $line) {
+            $data = json_decode($line);
+
+            $headers[] = $dateString . ' ' . $data->time;
+
+            foreach ($data->topten as $name => $score) {
+                if ($name) {
+                    $topTens[$name][] = $score;
+
+                    if ('Kuku ' === $name) {
+                        $kukuHeaders[] = $dateString . ' ' . $data->time;
+                        $kukuData[] = $score;
+                    }
+                } else {
+                    foreach ($topTens as $ix => $vals) {
+                        $topTens[$ix][] = 0;
+                    }
+                }
+            }
+        }
+
+        $format->headerString = '\'' . implode('\',\'', $headers) . '\'';
+
+        $topTensLines = [];
+
+        $i = 0;
+
+        foreach ($topTens as $name => $scores) {
+            $topTensLines[] = 'label: \'' . $name . '\','
+                .'borderColor: \'' . (isset($this->colors[$i]) ? $this->colors[$i] : $this->colors[0]) . '\','
+                .'data: [' . implode(',', $scores) . ']';
+            $i++;
+        }
+
+        $format->topTenLines = '{' . implode('},{', $topTensLines) . '}';
+
+        $format->kukuHeaderString = '\'' . implode('\',\'', $kukuHeaders) . '\'';
+        $format->kukuDataString = '{label: \'KuKu\', data: [' . implode(',', $kukuData) . ']}';
+
+        return $format;
+    }
 
     public function getTopTenDiff(\DateTime $dateTime)
     {
@@ -174,7 +185,7 @@ class StarLinker
         foreach ($data1->topten as $name => $score) {
             if (isset($diff[$name])) {
                 $diff[$name]->start = $score;
-                $diff[$name]->diff =  $diff[$name]->end - $score;
+                $diff[$name]->diff = $diff[$name]->end - $score;
             }
         }
 
@@ -229,12 +240,15 @@ class StarLinker
 
         $data = [];
 
-        foreach ($chart['data'] as $name => $scores)
-        {
-            $data[] = 'label: \'' . $name . '\', data: [' . implode(',', $scores).']';
+        $i = 0;
+        foreach ($chart['data'] as $name => $scores) {
+            $data[] = 'label: \'' . $name . '\','
+                .'borderColor: \'' . (isset($this->colors[$i]) ? $this->colors[$i] : $this->colors[0]) . '\','
+                .' data: [' . implode(',', $scores) . ']';
+            $i++;
         }
 
-        $diffChart->data = '{'.implode('},{', $data) . '}';
+        $diffChart->data = '{' . implode('},{', $data) . '}';
 
 
         return $diffChart;
