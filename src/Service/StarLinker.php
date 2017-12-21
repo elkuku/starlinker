@@ -180,4 +180,63 @@ class StarLinker
 
         return $diff;
     }
+
+    public function getDiffChart()
+    {
+        $dateTime = (new \DateTime())->modify('+1 day');
+
+        $chart = [];
+
+        for ($i = 1; $i <= 30; $i++) {
+
+            $dateTime->modify('-1 day');
+
+            $lines = $this->getStatsByDate($dateTime);
+
+            if (!$lines) {
+                continue;
+            }
+
+            $diff = [];
+
+            $data1 = json_decode($lines[0]);
+            $data2 = json_decode(end($lines));
+
+            foreach ($data2->topten as $name => $score) {
+                $diff[$name] = $score;
+            }
+
+            foreach ($data1->topten as $name => $score) {
+                if (isset($diff[$name])) {
+                    $chart['data'][$name][$dateTime->format('Y-m-d')] = $diff[$name] - $score;
+                }
+            }
+
+            $chart['headers'][] = $dateTime->format('Y-m-d');
+        }
+
+        foreach ($chart['headers'] as $dt) {
+            foreach ($chart['data'] as $name => $scores) {
+                if (false === isset($chart['data'][$name][$dt])) {
+                    $chart['data'][$name][$dt] = 0;
+                }
+            }
+        }
+
+        $diffChart = new \stdClass();
+
+        $diffChart->headerString = '\'' . implode('\',\'', $chart['headers']) . '\'';
+
+        $data = [];
+
+        foreach ($chart['data'] as $name => $scores)
+        {
+            $data[] = 'label: \'' . $name . '\', data: [' . implode(',', $scores).']';
+        }
+
+        $diffChart->data = '{'.implode('},{', $data) . '}';
+
+
+        return $diffChart;
+    }
 }

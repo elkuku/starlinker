@@ -31,13 +31,16 @@ class Main extends Controller
         $dt = $showDate ? new \DateTime($showDate) : new \DateTime();
 
 		$stats = $starLinker->getFormatForJsChart($dt);
+        /*$diffChart = $starLinker->getDiffChart();*/
 		$diff = $starLinker->getTopTenDiff($dt);
 
 		return $this->render(
 			'default/index.html.twig',
 			[
 				'stats' => $stats,
-                'toptenDiff' => $diff
+                'toptenDiff' => $diff,
+                'dateTime' => $dt,
+                'diffChart' => $starLinker->getDiffChart(),
 			]
 		);
 	}
