@@ -14,6 +14,10 @@
                 ]
             },
             options: {
+                title: {
+                    display: true,
+                    text: 'Statistics for {{ dateTime|date('d m Y') }}'
+                },
                 scales: {
                     xAxes: [{
                         type: 'time',
@@ -38,6 +42,10 @@
                 ]
             },
             options: {
+                title: {
+                    display: true,
+                    text: 'Daily results for "the last 30 days"'
+                },
                 scales: {
                     xAxes: [{
                         type: 'time',
@@ -62,6 +70,10 @@
                 ]
             },
             options: {
+                title: {
+                    display: true,
+                    text: '"Kuku"\'s statistics for {{ dateTime|date('d m Y') }}'
+                },
                 scales: {
                     xAxes: [{
                         type: 'time',
@@ -83,7 +95,8 @@
 
 {% block body %}
     <form id="dateSelect">
-        <input name="showdate" class="js-datepicker" data-date-format="yyyy-mm-dd" onchange="$('#dateSelect').submit()">
+        <label for="showdate">Date</label>
+        <input name="showdate" id="showdate" value="{{ dateTime|date('Y-m-n') }}" class="js-datepicker" data-date-format="yyyy-mm-dd" onchange="$('#dateSelect').submit()">
     </form>
 
     <div class="row">
