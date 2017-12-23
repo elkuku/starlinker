@@ -100,7 +100,7 @@
     </form>
 
     <div class="row">
-        <div class="col-sm-4">
+        <div class="col-sm-6">
             <table class="table table-condensed table-striped">
                 <tr>
                     <th class="text-center">#</th>
@@ -136,14 +136,18 @@
                 {% endfor %}
             </table>
         </div>
-        <div class="col-sm-4">
-            <canvas id="statsChart" width="400" height="200"></canvas>
-        </div>
-        <div class="col-sm-4">
-            <canvas id="kukuChart" width="200" height="100"></canvas>
+        <div class="col-sm-6">
+            <canvas id="diffChart" width="200" height="100"></canvas>
         </div>
     </div>
 
-    <canvas id="diffChart" width="200" height="100"></canvas>
+<div class="row">
+    <div class="col-sm-6">
+        <canvas id="statsChart" width="400" height="200"></canvas>
+    </div>
+    <div class="col-sm-6">
+        <canvas id="kukuChart" width="200" height="100"></canvas>
+    </div>
+</div>
 
 {% endblock %}
