@@ -35,6 +35,10 @@ class Fetch extends ContainerAwareCommand
 
 		$data = $this->fetchData();
 
+        if (!$data) {
+            return;
+        }
+
 		file_put_contents($fileName, $data);
 
 		$output->writeln(sprintf('File has been saved to "%s"', $fileName));
