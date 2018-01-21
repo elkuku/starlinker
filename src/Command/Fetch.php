@@ -48,7 +48,7 @@ class Fetch extends ContainerAwareCommand
 
 		$topten = [];
 
-		for ($i = 0; $i < 5; $i++)
+		for ($i = 0; $i < 7; $i++)
 		{
 			$d = explode("\t", $lines[$i]);
 
