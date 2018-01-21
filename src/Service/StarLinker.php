@@ -197,6 +197,8 @@ class StarLinker
         $dateTime = (new \DateTime())->modify('+1 day');
 
         $chart = [];
+	    $chart['headers'] = [];
+	    $chart['data'] = [];
 
         for ($i = 1; $i <= 30; $i++) {
 
