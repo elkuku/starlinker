@@ -92,11 +92,6 @@
 {% endblock %}
 
 {% block body %}
-    <form id="dateSelect">
-        <label for="showdate">Date</label>
-        <input name="showdate" id="showdate" value="{{ dateTime|date('Y-m-d') }}" class="js-datepicker" data-date-format="yyyy-mm-dd" onchange="$('#dateSelect').submit()">
-    </form>
-
     <div class="row">
         <div class="col-sm-6">
             <table class="table table-condensed table-striped">
@@ -135,16 +130,16 @@
             </table>
         </div>
         <div class="col-sm-6">
-            <canvas id="diffChart" width="200" height="100"></canvas>
+            <canvas id="kukuChart" width="200" height="100"></canvas>
         </div>
     </div>
 
 <div class="row">
     <div class="col-sm-6">
-        <canvas id="statsChart" width="400" height="200"></canvas>
+        <canvas id="diffChart" width="200" height="100"></canvas>
     </div>
     <div class="col-sm-6">
-        <canvas id="kukuChart" width="200" height="100"></canvas>
+        <canvas id="statsChart" width="400" height="200"></canvas>
     </div>
 </div>
 

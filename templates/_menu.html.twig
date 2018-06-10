@@ -28,6 +28,17 @@
             <ul class="nav navbar-nav navbar-right">
                 <!-- Authentication Links -->
             </ul>
+
+            <form class="form-inline" id="dateSelect">
+                <label for="showdate">Date</label>
+                <input name="showdate" id="showdate"
+                       class="js-datepicker"
+                       value="{{ dateTime|date('Y-m-d') }}"
+                       data-date-format="yyyy-mm-dd"
+                       onchange="$('#dateSelect').submit()">
+            </form>
+
+
         </div>
     </div>
 </nav>
