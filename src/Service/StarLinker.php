@@ -35,7 +35,7 @@ class StarLinker
 	];
 
 	/**
-	 * ShaFinder constructor.
+	 * StarLinker constructor.
 	 *
 	 * @param string $projectDir
 	 */
@@ -220,7 +220,6 @@ class StarLinker
 
 		for ($i = 1; $i <= 30; $i++)
 		{
-
 			$dateTime->modify('-1 day');
 
 			$lines = $this->getStatsByDate($dateTime);
