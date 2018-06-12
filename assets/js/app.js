@@ -1,13 +1,13 @@
-//var $ = require('jquery');
-
-// This seems legacy stuff...
 window.$ = $;
 
-require('bootstrap-sass');
+require('../../node_modules/bootstrap/dist/css/bootstrap.css');
+require('../../node_modules/bootstrap/dist/js/bootstrap');
+
+require('../css/app.css');
 
 require('chart.js');
-require('bootstrap-datepicker');
 
 $(document).ready(function() {
     $('.js-datepicker').datepicker();
 });
+

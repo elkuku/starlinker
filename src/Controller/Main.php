@@ -51,6 +51,6 @@ class Main extends Controller
      */
     public function about()
     {
-        return $this->render('default/about.html.twig');
+        return $this->render('default/about.html.twig', ['dateTime' => new \DateTime()]);
 	}
 }

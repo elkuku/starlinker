@@ -77,13 +77,13 @@
                 scales: {
                     xAxes: [{
                         type: 'time',
-                        time: { displayFormats: { minute: 'h:mm' }}
+                        time: {displayFormats: {minute: 'h:mm'}}
                     }]
                 }
             }
         });
 
-        setTimeout(function(){
+        setTimeout(function () {
             window.location.reload(1);
         }, 60000);
 
@@ -94,15 +94,18 @@
 {% block body %}
     <div class="row">
         <div class="col-sm-6">
-            <table class="table table-condensed table-striped">
+            <table class="table table-dark table-striped table-hover">
+                <thead>
                 <tr>
-                    <th class="text-center">#</th>
-                    <th>Name</th>
-                    <th class="text-right">Start</th>
-                    <th class="text-right">End</th>
-                    <th class="text-right">Diff</th>
-                    <th class="text-right">Gain</th>
+                    <th scope="col" class="text-center">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col" class="text-right">Start</th>
+                    <th scope="col" class="text-right">End</th>
+                    <th scope="col" class="text-right">Diff</th>
+                    <th scope="col" class="text-right">Gain</th>
                 </tr>
+                </thead>
+                <tbody>
                 {% set rank = 0 %}
                 {% set previous = 0 %}
                 {% for name, data in toptenDiff %}
@@ -114,9 +117,9 @@
                         <td class="text-right">{{ data.end|price }}</td>
                         <td class="text-right">
                             {% if previous %}
-                            &uArr; {{ (previous - data.end)|price }}
+                                &uArr; {{ (previous - data.end)|price }}
                             {% else %}
-                            -
+                                -
                             {% endif %}
                             {% set previous = data.end %}
                         </td>
@@ -127,6 +130,7 @@
                         <td colspan="2">No data available</td>
                     </tr>
                 {% endfor %}
+                </tbody>
             </table>
         </div>
         <div class="col-sm-6">
@@ -134,13 +138,13 @@
         </div>
     </div>
 
-<div class="row">
-    <div class="col-sm-6">
-        <canvas id="diffChart" width="200" height="100"></canvas>
+    <div class="row">
+        <div class="col-sm-6">
+            <canvas id="diffChart" width="200" height="100"></canvas>
+        </div>
+        <div class="col-sm-6">
+            <canvas id="statsChart" width="400" height="200"></canvas>
+        </div>
     </div>
-    <div class="col-sm-6">
-        <canvas id="statsChart" width="400" height="200"></canvas>
-    </div>
-</div>
 
 {% endblock %}

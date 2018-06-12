@@ -6,15 +6,13 @@
   "author": "Nikolai Plath <der.el.kuku@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "bootstrap-datepicker": "^1.7.1",
-    "bootstrap-sass": "^3.3.7",
+    "bootstrap": "^4.1.1",
     "chart.js": "^2.7.1",
-    "jquery": "^3.2.1"
+    "jquery": "^3.2.1",
+    "popper.js": "^1.14.3"
   },
   "devDependencies": {
-    "@symfony/webpack-encore": "^0.17.0",
-    "node-sass": "^4.7.2",
-    "sass-loader": "^6.0.6"
+    "@symfony/webpack-encore": "^0.17.0"
   },
   "scripts": {
     "dev-server": "./node_modules/.bin/encore dev-server",

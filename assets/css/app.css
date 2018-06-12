@@ -1,0 +1,17 @@
+body {
+  padding-top: 80px;
+  padding-bottom: 40px;
+  background-color: #1d1d1d;
+  color: lime;
+}
+
+.footer {
+  height: 30px;
+  background-color: #222;
+}
+
+input.form-control {
+  background-color: #1d1d1d;
+  color: lime;
+  border: 0;
+}
