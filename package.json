@@ -1,10 +1,9 @@
 {
   "name": "starlinker",
   "version": "1.0.0",
-  "main": "index.js",
   "repository": "https://github.com/elkuku/starlinker.git",
   "author": "Nikolai Plath <der.el.kuku@gmail.com>",
-  "license": "MIT",
+  "license": "WTFPL",
   "dependencies": {
     "bootstrap": "^4.1.1",
     "chart.js": "^2.7.2",
