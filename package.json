@@ -7,12 +7,12 @@
   "license": "MIT",
   "dependencies": {
     "bootstrap": "^4.1.1",
-    "chart.js": "^2.7.1",
-    "jquery": "^3.2.1",
+    "chart.js": "^2.7.2",
+    "jquery": "^3.3.1",
     "popper.js": "^1.14.3"
   },
   "devDependencies": {
-    "@symfony/webpack-encore": "^0.17.0"
+    "@symfony/webpack-encore": "^0.20.1"
   },
   "scripts": {
     "dev-server": "./node_modules/.bin/encore dev-server",
