@@ -2,7 +2,7 @@ body {
   padding-top: 80px;
   padding-bottom: 40px;
   background-color: #1d1d1d;
-  color: lime;
+  color: #bababa;
 }
 
 .footer {
@@ -12,6 +12,6 @@ body {
 
 input.form-control {
   background-color: #1d1d1d;
-  color: lime;
+  color: #bababa;
   border: 0;
 }
