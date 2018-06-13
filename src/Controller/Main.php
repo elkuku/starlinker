@@ -16,41 +16,38 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class Main extends Controller
 {
-    /**
-     * @Route("/", name="welcome")
-     *
-     * @param StarLinker $starLinker
-     * @param Request $request
-     *
-     * @return Response
-     */
+	/**
+	 * @Route("/", name="welcome")
+	 *
+	 * @param StarLinker $starLinker
+	 * @param Request    $request
+	 *
+	 * @return Response
+	 */
 	public function main(StarLinker $starLinker, Request $request)
 	{
-        $showDate = $request->query->get('showdate');
+		$showDate = $request->query->get('showdate');
 
-        $dt = $showDate ? new \DateTime($showDate) : new \DateTime();
-
-		$stats = $starLinker->getFormatForJsChart($dt);
-        /*$diffChart = $starLinker->getDiffChart();*/
-		$diff = $starLinker->getTopTenDiff($dt);
+		$dt = $showDate ? new \DateTime($showDate) : new \DateTime();
 
 		return $this->render(
 			'default/index.html.twig',
 			[
-				'stats' => $stats,
-                'toptenDiff' => $diff,
-                'dateTime' => $dt,
-                'diffChart' => $starLinker->getDiffChart(),
+				'dateTime'     => $dt,
+				'toptenDiff'   => $starLinker->getTopTenDiff($dt),
+				'stats'        => $starLinker->getFormatForJsChart($dt),
+				'diffChart'    => $starLinker->getDiffChart(),
+				'periodPoints' => $starLinker->getPeriodPoints(),
 			]
 		);
 	}
 
-    /**
-     * @Route("/about", name="about")
-     * @return Response
-     */
-    public function about()
-    {
-        return $this->render('default/about.html.twig', ['dateTime' => new \DateTime()]);
+	/**
+	 * @Route("/about", name="about")
+	 * @return Response
+	 */
+	public function about()
+	{
+		return $this->render('default/about.html.twig', ['dateTime' => new \DateTime()]);
 	}
 }

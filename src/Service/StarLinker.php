@@ -8,6 +8,8 @@
 
 namespace App\Service;
 
+use App\Util\Chart;
+use App\Util\UserDiff;
 use Symfony\Component\Filesystem\Filesystem;
 
 /**
@@ -193,7 +195,7 @@ class StarLinker
 
 		foreach ($data2->topten as $name => $score)
 		{
-			$data        = new \stdClass();
+			$data        = new UserDiff();
 			$data->end   = $score;
 			$diff[$name] = $data;
 		}
@@ -264,6 +266,72 @@ class StarLinker
 		$diffChart = new \stdClass();
 
 		$diffChart->headerString = '\'' . implode('\',\'', $chart['headers']) . '\'';
+
+		$data = [];
+		$i    = 0;
+
+		foreach ($chart['data'] as $name => $scores)
+		{
+			$data[] = 'label: \'' . $name . '\','
+				. 'borderColor: \'' . (isset($this->colors[$i]) ? $this->colors[$i] : $this->colors[0]) . '\','
+				. ' data: [' . implode(',', $scores) . ']';
+			$i++;
+		}
+
+		$diffChart->data = '{' . implode('},{', $data) . '}';
+
+
+		return $diffChart;
+	}
+
+	/**
+	 * @param int $days
+	 *
+	 * @return Chart
+	 */
+	public function getPeriodPoints($days = 30): Chart
+	{
+		$dateTime = (new \DateTime())->modify('+1 day');
+
+		$chart            = [];
+		$chart['headers'] = [];
+		$chart['data']    = [];
+
+		for ($i = 1; $i <= $days; $i++)
+		{
+			$dateTime->modify('-1 day');
+
+			$lines = $this->getStatsByDate($dateTime);
+
+			if (!$lines)
+			{
+				continue;
+			}
+
+			$data2 = json_decode(end($lines));
+
+			foreach ($data2->topten as $name => $score)
+			{
+				$chart['data'][$name][$dateTime->format('Y-m-d')] = $score;
+			}
+
+			$chart['headers'][] = $dateTime->format('Y-m-d');
+		}
+
+		foreach ($chart['headers'] as $dt)
+		{
+			foreach ($chart['data'] as $name => $scores)
+			{
+				if (false === isset($chart['data'][$name][$dt]))
+				{
+					$chart['data'][$name][$dt] = 0;
+				}
+			}
+		}
+
+		$diffChart = new Chart();
+
+		$diffChart->header = '\'' . implode('\',\'', $chart['headers']) . '\'';
 
 		$data = [];
 		$i    = 0;
